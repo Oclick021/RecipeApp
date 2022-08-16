@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject IRecipeService recipeService
+<div class="container">
+    <h3>Recipes</h3>
+    <div class="tool-bar mb-3">
+        <a class="btn btn-primary" href="/newRecipe">Add new Recipe</a>
+        <button class="btn btn-info" @onclick="StateHasChanged">Refresh</button>
+    </div>
+    <div class="row">
+        @foreach (var recipe in Recipes)
+        {
+            <div class="col col-lg-3">
+                <RecipeCard Recipe="recipe"  OnDelete="StateHasChanged" />
+            </div>
+        }
+    </div>
+</div>
+
+@code{
+    List<Recipe> Recipes;
+    protected override void OnInitialized()
+    {
+        Recipes = recipeService.GetRecipes();
+    }
+}

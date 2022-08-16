@@ -1,0 +1,30 @@
+﻿@inject IRecipeService recipeService
+
+<div class="card">
+    <img class="card-img-top" src="@Recipe.ImageLink" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Recipe.Title</h5>
+        <p class="card-text">@Recipe.Description</p>
+        <div class="d-flex w-100">
+            <a href="#" class="btn btn-primary">See recipe</a>
+            <div class="flex-grow-1"></div>
+            <button class="btn btn-warning ml-auto" @onclick="DeleteRecipe">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Recipe Recipe { get; set; }
+
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+
+
+    void DeleteRecipe()
+    {
+        recipeService.DeleteRecipe(Recipe.Id);
+        OnDelete.InvokeAsync();
+    }
+}

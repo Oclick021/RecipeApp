@@ -1,0 +1,48 @@
+﻿@page "/newRecipe"
+@page "/new"
+@inject IRecipeService recipeService
+@inject NavigationManager navManage 
+
+
+<EditForm Model="@newRecipe" OnValidSubmit="AddRecipe">
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
+    <div class="container">
+        <div class="form-group">
+            <label>Title</label>
+            <input @bind-value="@newRecipe.Title" class="form-control" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label>Callories</label>
+            <input @bind-value="@newRecipe.Calories" type="number" class="form-control" placeholder="Calories">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input @bind-value="@newRecipe.Description" class="form-control" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <label>Time To Cook</label>
+            <input @bind-value="@newRecipe.TimeToCook" type="number" class="form-control" placeholder="TimeToCook">
+        </div>
+        <div class="form-group">
+            <label>Image Link</label>
+            <input @bind-value="@newRecipe.ImageLink" class="form-control" placeholder="ImageLink">
+        </div>
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">
+        Add
+    </button>
+</EditForm>
+
+
+@code {
+    Recipe newRecipe = new Recipe() { Title = "Hello World!" };
+
+    void AddRecipe()
+    {
+        recipeService.AddRecipe(newRecipe);
+        navManage.NavigateTo("/");
+    }
+}
